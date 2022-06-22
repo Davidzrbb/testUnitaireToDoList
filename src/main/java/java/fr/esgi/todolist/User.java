@@ -1,3 +1,5 @@
+package java.fr.esgi.todolist;
+
 public class User {
     String name;
     String lastname;
