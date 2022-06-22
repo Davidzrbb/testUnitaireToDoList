@@ -1,4 +1,4 @@
-package java.fr.esgi.todolist;
+package fr.esgi.todolist;
 
 public class User {
     String name;

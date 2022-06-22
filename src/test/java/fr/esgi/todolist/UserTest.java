@@ -1,9 +1,7 @@
-package java.fr.esgi.todolist;
+package fr.esgi.todolist;
 
 import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.Test;
-
-import java.fr.esgi.todolist.User;
 
 
 //@RunWith(MockitoJUnitRunner.class)
