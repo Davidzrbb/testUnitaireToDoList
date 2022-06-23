@@ -10,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDate;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +26,7 @@ public class UserTest {
     public void setup() throws NotImplementedException {
         this.customEmailValidator = Mockito.mock(CustomEmailValidator.class);
         Mockito.when(customEmailValidator.validate(ArgumentMatchers.anyString())).thenReturn(true);
-        this.testUser = new User("Marwan", "Boubchir", "azertyuiop", LocalDate.now().minusYears(21), this.customEmailValidator,"osef");
+        this.testUser = new User("Marwan", "Boubchir", "azertyuiop", LocalDate.now().minusYears(21), this.customEmailValidator, "osef");
         //on test le user car sinon renvoie une erreur à chaque fois qu'on utilise pas le mock
         assertTrue(this.testUser.isValid());
     }
@@ -54,13 +56,14 @@ public class UserTest {
         assertFalse(this.testUser.isValid());
     }
 
-//    @Test
-//    void shouldInvalidateEmail() {
-//        this.testUser.setEmail("");
-//        assertEquals(false, this.testUser.isValid());
-//        this.testUser.setEmail(null);
-//        assertEquals(false, this.testUser.isValid());
-//    }
+    @Test
+    void shouldInvalidateEmail() throws NotImplementedException {
+        Mockito.when(customEmailValidator.validate(ArgumentMatchers.anyString())).thenReturn(false);
+        this.testUser.setEmail("");
+        assertFalse(this.testUser.isValid());
+        this.testUser.setEmail(null);
+        assertFalse(this.testUser.isValid());
+    }
 
     @Test
     void shouldInvalidatePassword() {
@@ -81,6 +84,7 @@ public class UserTest {
         this.testUser.setPassword(StringUtils.repeat('e', 41));
         assertTrue(this.testUser.isPasswordInvalid());
     }
+
     @Test
     void shouldPasswordValid() {
         this.testUser.setPassword("azertyuio");

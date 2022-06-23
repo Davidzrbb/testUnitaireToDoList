@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +26,7 @@ public class User {
     String email;
     LocalDate birthDate;
     private CustomEmailValidator customEmailValidator;
-    private List<Item> toDoList;
+    private List<Item> toDoList = new ArrayList<>();
 
 
     public User(String firstname, String lastname, String password, LocalDate birthDate, CustomEmailValidator customEmailValidator, String email) {
