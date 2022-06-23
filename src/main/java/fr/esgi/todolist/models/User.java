@@ -86,4 +86,7 @@ public class User {
             return false;
         }
     }
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
 }

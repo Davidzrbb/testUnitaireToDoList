@@ -3,6 +3,7 @@ package fr.esgi.todolist;
 import fr.esgi.todolist.models.User;
 import fr.esgi.todolist.validators.CustomEmailValidator;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.opentest4j.AssertionFailedError;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -93,6 +95,8 @@ public class UserTest {
 
     @Test
     void ShouldInvalidateAge() {
+        this.testUser.setBirthDate(LocalDate.now().minusYears(5));
+        assertFalse(this.testUser.isValid());
     }
 
     @Test
