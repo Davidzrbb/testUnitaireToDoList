@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -41,6 +43,11 @@ class ItemTest {
         assertEquals(test, this.item.getContent());
     }
 
+    @Test
+    public void shouldTestItem() {
+        assertEquals(item.getContent(), "Contenu");
+        assertEquals(item.getName(), "Item");
+    }
 
 
 }
