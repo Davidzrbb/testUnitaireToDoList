@@ -1,12 +1,12 @@
 package fr.esgi.todolist;
 
+import fr.esgi.todolist.models.User;
 import fr.esgi.todolist.validators.CustomEmailValidator;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
