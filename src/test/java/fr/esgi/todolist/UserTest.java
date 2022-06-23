@@ -7,12 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.apache.commons.lang3.StringUtils;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
+import java.time.LocalDate;
 
 @ExtendWith(MockitoExtension.class)
 public class UserTest {
@@ -20,17 +18,22 @@ public class UserTest {
     private CustomEmailValidator customEmailValidator;
     private User testUser;
 
+
     @BeforeEach
-    public void setup() {
-//        doReturn(true).when(CustomEmailValidator.validate(ArgumentMatchers.anyString()));
-        this.testUser = new User( "Marwan","Boubchir", "azertyuiop", LocalDate.now().minusYears(21), "marwan.boubchir@outlook.fr");
+    public void setup() throws NotImplementedException {
+        this.customEmailValidator = Mockito.mock(CustomEmailValidator.class);
+        Mockito.when(customEmailValidator.validate(ArgumentMatchers.anyString())).thenReturn(true);
+        this.testUser = new User("Marwan", "Boubchir", "azertyuiop", LocalDate.now().minusYears(21), this.customEmailValidator,"osef");
+        //on test le user car sinon renvoie une erreur à chaque fois qu'on utilise pas le mock
+        assertTrue(this.testUser.isValid());
     }
+
     @Test
     public void shouldTestUser() {
         assertEquals(testUser.firstname, "Marwan");
         assertEquals(testUser.lastname, "Boubchir");
         assertEquals(testUser.getPassword(), "azertyuiop");
-        assertEquals(testUser.email, "marwan.boubchir@outlook.fr");
+        assertEquals(testUser.email, "osef");
         assertEquals(testUser.birthDate, LocalDate.now().minusYears(21));
     }
 
@@ -60,13 +63,13 @@ public class UserTest {
 
     @Test
     void shouldInvalidatePassword() {
-        this.testUser.setLastname("");
+        this.testUser.setPassword("");
         assertFalse(this.testUser.isValid());
-        this.testUser.setLastname(null);
+        this.testUser.setPassword(null);
         assertFalse(this.testUser.isValid());
-        this.testUser.setLastname("az");
+        this.testUser.setPassword("az");
         assertFalse(this.testUser.isValid());
-        this.testUser.setLastname(StringUtils.repeat('e', 41));
+        this.testUser.setPassword(StringUtils.repeat('e', 41));
         assertFalse(this.testUser.isValid());
     }
 

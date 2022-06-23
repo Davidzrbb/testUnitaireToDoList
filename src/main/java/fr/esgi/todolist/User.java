@@ -12,12 +12,15 @@ public class User {
     String password;
     String email;
     LocalDate birthDate;
+    private CustomEmailValidator customEmailValidator;
 
-    public User(String firstname, String lastname, String password, LocalDate birthDate, String email) {
+
+    public User(String firstname, String lastname, String password, LocalDate birthDate, CustomEmailValidator customEmailValidator, String email) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.password = password;
         this.birthDate = birthDate;
+        this.password = password;
+        this.customEmailValidator = customEmailValidator;
         this.email = email;
     }
 
@@ -66,21 +69,23 @@ public class User {
     }
 
     public boolean isValid() {
-
-        if(this.firstname == null || this.firstname.equals("")) {
+        if (this.firstname == null || this.firstname.equals("")) {
+            System.out.println("Name is invalid");
             return false;
         }
-        if(this.lastname == null || this.lastname.equals("")) {
+        if (this.lastname == null || this.lastname.equals("")) {
+            System.out.println("Lastname is invalid");
             return false;
         }
         if(this.password == null || this.password.equals("") || isPasswordInvalid()) {
             return false;
         }
-        if(this.birthDate == null || Period.between(LocalDate.now(), birthDate).getYears() < 13){
+        if (this.birthDate == null || !LocalDate.now().minusYears(13).isAfter(this.birthDate)) {
+            System.out.println("Birth date is invalid");
             return false;
         }
         try {
-            return CustomEmailValidator.validate(email);
+            return this.customEmailValidator.validate(email);
         } catch (NotImplementedException e) {
             throw new RuntimeException(e);
         }
