@@ -42,7 +42,7 @@ public class ItemListTest {
     }
 
     @Test
-    void shouldAddMultipleItemToUserWithOutInterval()  {
+    void shouldAddMultipleItemToUserWithOutInterval() {
         Assertions.assertThrows(DateTimeException.class, () -> {
             Item item = new Item("Item", "Content");
             this.testUser.addItem(item);
@@ -60,5 +60,14 @@ public class ItemListTest {
         item = new Item("Item1", "Content1");
         this.testUser.addItem(item);
         assertEquals(items + 2, this.testUser.getToDoList().size());
+    }
+
+    @Test
+    void shouldSameNameItemToList() throws ArrayFullException {
+        Item item = new Item("Item", "Content");
+        this.testUser.addItem(item);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            this.testUser.addItem(item);
+        });
     }
 }
