@@ -7,15 +7,17 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class User {
-    String name;
-    String lastname;
-    String email;
-    LocalDate birthDate;
+    private String name;
+    private String lastname;
+    private String email;
+    private LocalDate birthDate;
+    private CustomEmailValidator customEmailValidator;
 
-    public User(String name, String lastname, LocalDate birthDate, String email) {
+    public User(String name, String lastname, LocalDate birthDate, CustomEmailValidator customEmailValidator, String email) {
         this.name = name;
         this.lastname = lastname;
         this.birthDate = birthDate;
+        this.customEmailValidator = customEmailValidator;
         this.email = email;
     }
 
@@ -52,18 +54,20 @@ public class User {
     }
 
     public boolean isValid() {
-
-        if(this.name == null || this.name.equals("")) {
+        if (this.name == null || this.name.equals("")) {
+            System.out.println("Name is invalid");
             return false;
         }
-        if(this.lastname == null || this.lastname.equals("")) {
+        if (this.lastname == null || this.lastname.equals("")) {
+            System.out.println("Lastname is invalid");
             return false;
         }
-        if(this.birthDate != null || Period.between(LocalDate.now(), birthDate).getYears() < 13){
+        if (this.birthDate == null || !LocalDate.now().minusYears(13).isAfter(this.birthDate)) {
+            System.out.println("Birth date is invalid");
             return false;
         }
         try {
-            return CustomEmailValidator.validate(email);
+            return this.customEmailValidator.validate(email);
         } catch (NotImplementedException e) {
             throw new RuntimeException(e);
         }
