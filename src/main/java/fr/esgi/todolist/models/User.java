@@ -38,7 +38,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean isPasswordInvalid(){
+    public boolean isPasswordInvalid() {
         return this.password.length() < 8 || this.password.length() > 40;
     }
 
@@ -51,7 +51,7 @@ public class User {
             System.out.println("Lastname is invalid");
             return false;
         }
-        if(this.password == null || this.password.equals("") || isPasswordInvalid()) {
+        if (this.password == null || this.password.equals("") || isPasswordInvalid()) {
             return false;
         }
         if (this.birthDate == null || !LocalDate.now().minusYears(13).isAfter(this.birthDate)) {
@@ -66,20 +66,24 @@ public class User {
     }
 
     public void addItem(Item item) throws ArrayFullException {
-        if(toDoList.size() >= 10){
+        if (toDoList.size() >= 10) {
             throw new ArrayFullException("Liste Pleine");
         }
-        if(toDoList.stream().map(Item::getName).toList().contains(item.getName())){
+        if (toDoList.stream().map(Item::getName).toList().contains(item.getName())) {
             throw new IllegalArgumentException("Item déjà existant");
         }
-        if(isInInsertItemDelay()){
+        if (isInInsertItemDelay()) {
             throw new DateTimeException("Rééssayez plus tard");
         }
         toDoList.add(item);
     }
 
-    public boolean isInInsertItemDelay(){
-        LocalDateTime date = Collections.max(toDoList.stream().map(Item::getCreationDate).toList());
-        return ChronoUnit.MINUTES.between(date, LocalDateTime.now()) < 1;
+    public boolean isInInsertItemDelay() {
+        if (toDoList.size() > 0) {
+            LocalDateTime date = Collections.max(toDoList.stream().map(Item::getCreationDate).toList());
+            return ChronoUnit.MINUTES.between(date, LocalDateTime.now()) < 1;
+        } else {
+            return false;
+        }
     }
 }
