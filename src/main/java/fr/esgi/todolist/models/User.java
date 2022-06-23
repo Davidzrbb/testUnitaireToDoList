@@ -19,33 +19,46 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class User {
-    String name;
+    String firstname;
     String lastname;
+    String password;
     String email;
     LocalDate birthDate;
+    private CustomEmailValidator customEmailValidator;
     private List<Item> toDoList;
 
 
-    public User(String name, String lastname, LocalDate birthDate, String email) {
-        this.name = name;
+    public User(String firstname, String lastname, String password, LocalDate birthDate, CustomEmailValidator customEmailValidator, String email) {
+        this.firstname = firstname;
         this.lastname = lastname;
         this.birthDate = birthDate;
+        this.password = password;
+        this.customEmailValidator = customEmailValidator;
         this.email = email;
     }
 
-    public boolean isValid() {
+    public boolean isPasswordInvalid(){
+        return this.password.length() < 8 || this.password.length() > 40;
+    }
 
-        if(this.name == null || this.name.equals("")) {
+    public boolean isValid() {
+        if (this.firstname == null || this.firstname.equals("")) {
+            System.out.println("Name is invalid");
             return false;
         }
-        if(this.lastname == null || this.lastname.equals("")) {
+        if (this.lastname == null || this.lastname.equals("")) {
+            System.out.println("Lastname is invalid");
             return false;
         }
-        if(this.birthDate != null || Period.between(LocalDate.now(), birthDate).getYears() < 13){
+        if(this.password == null || this.password.equals("") || isPasswordInvalid()) {
+            return false;
+        }
+        if (this.birthDate == null || !LocalDate.now().minusYears(13).isAfter(this.birthDate)) {
+            System.out.println("Birth date is invalid");
             return false;
         }
         try {
-            return CustomEmailValidator.validate(email);
+            return this.customEmailValidator.validate(email);
         } catch (NotImplementedException e) {
             throw new RuntimeException(e);
         }

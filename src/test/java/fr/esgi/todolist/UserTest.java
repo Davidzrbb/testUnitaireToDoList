@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.apache.commons.lang3.StringUtils;
 import org.mockito.ArgumentMatchers;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
@@ -30,11 +31,11 @@ public class UserTest {
 
     @Test
     public void shouldTestUser() {
-        assertEquals(testUser.firstname, "Marwan");
-        assertEquals(testUser.lastname, "Boubchir");
+        assertEquals(testUser.getFirstname(), "Marwan");
+        assertEquals(testUser.getLastname(), "Boubchir");
         assertEquals(testUser.getPassword(), "azertyuiop");
-        assertEquals(testUser.email, "osef");
-        assertEquals(testUser.birthDate, LocalDate.now().minusYears(21));
+        assertEquals(testUser.getEmail(), "osef");
+        assertEquals(testUser.getBirthDate(), LocalDate.now().minusYears(21));
     }
 
     @Test
